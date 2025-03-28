@@ -1,4 +1,4 @@
 all:
-	gcc -Wall -Werror -Wextra -g -std=c17 -o run main.c
+	gcc -Wall -Werror -Wextra -g -std=c2x -o run alog.c task.c main.c
 clean:
-	rm -rf run
+	rm -rf run output.bin
