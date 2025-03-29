@@ -19,6 +19,7 @@ typedef enum {
     LOW,
     MEDIUM,
     HIGH,
+    PRIORITY_COUNT,
 } Priority;
 
 typedef struct _Task {
@@ -35,13 +36,16 @@ typedef struct _Queue {
 
 bool InitQueue(Queue *queue);
 bool DeallocateQueue(Queue *queue);
-bool Enqueue(Queue *queue , char *message);
+bool Enqueue(Queue *queue , char *message, Priority priority);
 bool Dequeue(Queue *queue);
 bool RemoveAt(Queue *queue, unsigned int index);
 char *Peek(Queue *queue , unsigned int task_id);
 unsigned int Size(Queue *queue);
 bool IsEmpty(Queue *queue);
+
+void PrintTask(Task task);
 void PrintQueue(Queue *queue);
+bool task_exists(Queue *queue , char *message);
 
 char *extract_args(int argc , char **argv);
 bool load_file(const char *filepath, Queue *queue);
