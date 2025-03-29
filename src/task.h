@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <errno.h>
 
-#include "alog.h"
+#include "../thirdparty/alog.h"
 
 #define INITIAL_CAP 256
 
