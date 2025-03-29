@@ -18,7 +18,11 @@ int main(int argc, char **argv)
     }
 
     char *buffer = extract_args(argc, argv);
-    if (!Enqueue(&queue, buffer)) {
+    if (buffer == NULL) return 1;
+
+    if (task_exists(&queue, buffer)) return 1;
+
+    if (!Enqueue(&queue, buffer, atoi(argv[3]))) {
         Log_Out(ERROR, "Failed To Enqueue message: %s.\n", buffer);
         free(buffer);
         return 1;
