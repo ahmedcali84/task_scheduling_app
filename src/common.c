@@ -53,7 +53,7 @@ Task parse_args(Queue *queue, int argc, char **argv)
     while (k < argc) {
         if (strcmp(argv[k], "--help") == 0) {
             usage(argv);
-			DeallocateQueue(queue);
+            DeallocateQueue(queue);
             exit(EXIT_SUCCESS);
         } 
         
@@ -72,22 +72,22 @@ Task parse_args(Queue *queue, int argc, char **argv)
             if (k < argc) {
                 char *priority_arg = argv[k];
                 bool valid_priority = false;
-				bool is_numeric = true;
+                bool is_numeric = true;
 
-				for (char *p = priority_arg; *p != '\0'; ++p) {
-					if (!isdigit(*p)) {
-						is_numeric = false;
-						break;
-					}
-				}
+                for (char *p = priority_arg; *p != '\0'; ++p) {
+                    if (!isdigit(*p)) {
+                        is_numeric = false;
+                        break;
+                    }
+                }
 
-				if (is_numeric) {
-					int priority_num = atoi(priority_arg);
-					if (priority_num >= 0 && priority_num < PRIORITY_COUNT) {
-						strncpy(priority, priority_as_cstr[priority_num], PRIORITY_LEN - 1);
-						valid_priority = true;
-					}
-				} else {
+                if (is_numeric) {
+                    int priority_num = atoi(priority_arg);
+                    if (priority_num >= 0 && priority_num < PRIORITY_COUNT) {
+                        strncpy(priority, priority_as_cstr[priority_num], PRIORITY_LEN - 1);
+                        valid_priority = true;
+                    }
+                } else {
                     for (int i = 0; i < PRIORITY_COUNT; ++i) {
                         if (strcasecmp(priority_arg, priority_as_cstr[i]) == 0) {
                             strncpy(priority, priority_as_cstr[i], PRIORITY_LEN - 1);
