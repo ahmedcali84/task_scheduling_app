@@ -13,7 +13,7 @@
 
 #include "../thirdparty/alog.h"
 
-#define INITIAL_CAP 256
+#define INITIAL_CAP 10
 
 typedef enum {
     LOW,

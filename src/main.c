@@ -1,10 +1,24 @@
 #include "task.h"
 
+#define SIXTEEN "             "
+
+void usage(char **argv)
+{
+    FILE *out = stdout;
+    fprintf(out,"USAGE: %s <Task Message> <Priority>.\n",argv[0]);
+    fprintf(out,"    Priority: \n      0 -> LOW \n      1 -> MEDIUM \n      2 -> HIGH\n");
+}
+
 int main(int argc, char **argv)
 {
     if (argc < 2) {
-        Log_Out(ERROR, "Usage: %s [MESSAGE].\n", argv[0]);
+        usage(argv);
         return 1;
+    }
+
+    if (strcmp(argv[1], "--help") == 0) {
+        usage(argv);
+        return 0;
     }
 
     const char *file_path = "output.bin";

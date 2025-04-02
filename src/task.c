@@ -57,9 +57,9 @@ bool RemoveAt(Queue *queue, unsigned int index)
 
     free(queue->tasks[index].message);
 
-    // Shift Elements
+    // NOTE: Shift Elements
     memmove(&queue->tasks[index], &queue->tasks[index + 1], sizeof(Task) * (queue->count - index - 1));
-    queue->count--; // decrement count
+    queue->count--; // NOTE: decrement count
     return true;
 }
 
@@ -115,7 +115,7 @@ char *extract_args(int argc , char **argv)
         buffer[k++] = ' ';
     }
 
-    buffer[k - 1] = '\0'; // Null Terminate the strings
+    buffer[k - 1] = '\0'; // NOTE: Null Terminate the strings
     return buffer;
 }
 
@@ -149,7 +149,7 @@ bool load_file(const char *filepath , Queue *queue)
     }
 
     size_t bytes_read = fread(buffer, 1 , file_size , f);
-    fclose(f); // close file early, buffer holds data now
+    fclose(f); // NOTE: close file early, buffer holds data now
 
     if (bytes_read != (size_t) file_size) {
         Log_Out(ERROR, "Failed to Read File: %s (expaected %ld bytes, got %zu bytes).\n", filepath, file_size, bytes_read);
@@ -157,10 +157,10 @@ bool load_file(const char *filepath , Queue *queue)
         return false;
     }
 
-    // extract tasks from buffer
+    // NOTE: extract tasks from buffer
     char *ptr = buffer;
     while (ptr < buffer + file_size) {
-        // read id
+        // NOTE: read id
         if (ptr + sizeof(uint32_t) > buffer + file_size) {
             Log_Out(ERROR, "Unexpected End of File while reading Id.\n");
             return false;
@@ -193,7 +193,7 @@ bool load_file(const char *filepath , Queue *queue)
             return false;
         }
 
-        // Allocate Memory For Message
+        // NOTE: Allocate Memory For Message
         char *tmp_msg = (char *)malloc(msg_len + 1);
         if (tmp_msg == NULL) {
             Log_Out(ERROR, "Failed To Allocate Memory For tmp message.\n");
@@ -256,11 +256,11 @@ bool dump_queue(const char *file_path, const Queue *queue)
 {
     if (queue == NULL || file_path == NULL) return false;
 
-    // Calculate Total Size Needed
+    // NOTE: Calculate Total Size Needed
     size_t total_size = 0;
     for (unsigned int i = 0; i < queue->count; ++i) {
-        total_size += sizeof(uint32_t) * 3; // id + msg_len + priority
-        total_size += strlen(queue->tasks[i].message); // message
+        total_size += sizeof(uint32_t) * 3; // NOTE: id + msg_len + priority
+        total_size += strlen(queue->tasks[i].message); // NOTE: message
     }
 
     char *buffer = (char *)malloc(total_size);
@@ -273,19 +273,19 @@ bool dump_queue(const char *file_path, const Queue *queue)
         uint32_t msg_len = (uint32_t) strlen(task->message);
         uint32_t priority = (uint32_t) task->priority;
 
-        // Write Id
+        // NOTE: Write Id
         memcpy(ptr, &id, sizeof(id));
         ptr += sizeof(id);
 
-        // Write message length
+        // NOTE: Write message length
         memcpy(ptr, &msg_len, sizeof(msg_len));
         ptr += sizeof(msg_len);
 
-        // Write Priority
+        // NOTE: Write Priority
         memcpy(ptr, &priority, sizeof(priority));
         ptr += sizeof(priority);
 
-        // Write Message Content
+        // NOTE: Write Message Content
         memcpy(ptr, task->message, msg_len);
         ptr += msg_len;
     }
