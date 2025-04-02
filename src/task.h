@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
+#include <strings.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -13,7 +14,9 @@
 
 #include "../thirdparty/alog.h"
 
-#define INITIAL_CAP 10
+#define INITIAL_CAP  10
+#define BUFFER_LEN   256
+#define PRIORITY_LEN 10
 
 typedef enum {
     LOW,
@@ -21,6 +24,8 @@ typedef enum {
     HIGH,
     PRIORITY_COUNT,
 } Priority;
+
+extern const char *priority_as_cstr[PRIORITY_COUNT];
 
 typedef struct _Task {
     char *message;
@@ -47,7 +52,9 @@ void PrintTask(Task task);
 void PrintQueue(Queue *queue);
 bool task_exists(Queue *queue , char *message);
 
+void usage(char **argv);
 char *extract_args(int argc , char **argv);
+Task parse_args(Queue *queue, int argc, char **argv);
 bool load_file(const char *filepath, Queue *queue);
 bool dump_file(const char *filepath , const void *data , unsigned int size);
 bool dump_queue(const char *file_path, const Queue *queue);
